@@ -13,53 +13,52 @@ typedef OnTap = void Function(Flushbar flushbar);
 
 /// A highly customizable widget so you can notify your user when you fell like he needs a beautiful explanation.
 class Flushbar<T> extends StatefulWidget {
-  Flushbar(
-      {Key? key,
-      String? title,
-      Color? titleColor,
-      double? titleSize,
-      String? message,
-      double? messageSize,
-      Color? messageColor,
-      Widget? titleText,
-      Widget? messageText,
-      Widget? icon,
-      bool shouldIconPulse = true,
-      double? maxWidth,
-      EdgeInsets margin = const EdgeInsets.all(0.0),
-      EdgeInsets padding = const EdgeInsets.all(16),
-      BorderRadius? borderRadius,
-      Color? borderColor,
-      double borderWidth = 1.0,
-      Color backgroundColor = const Color(0xFF303030),
-      Color? leftBarIndicatorColor,
-      List<BoxShadow>? boxShadows,
-      Gradient? backgroundGradient,
-      Widget? mainButton,
-      OnTap? onTap,
-      Duration? duration,
-      bool isDismissible = true,
-      FlushbarDismissDirection dismissDirection =
-          FlushbarDismissDirection.VERTICAL,
-      bool showProgressIndicator = false,
-      AnimationController? progressIndicatorController,
-      Color? progressIndicatorBackgroundColor,
-      Animation<Color>? progressIndicatorValueColor,
-      FlushbarPosition flushbarPosition = FlushbarPosition.BOTTOM,
-      double positionOffset = 0.0,
-      FlushbarStyle flushbarStyle = FlushbarStyle.FLOATING,
-      Curve forwardAnimationCurve = Curves.easeOutCirc,
-      Curve reverseAnimationCurve = Curves.easeOutCirc,
-      Duration animationDuration = const Duration(seconds: 1),
-      FlushbarStatusCallback? onStatusChanged,
-      double barBlur = 0.0,
-      bool blockBackgroundInteraction = false,
-      double? routeBlur,
-      Color? routeColor,
-      Form? userInputForm,
-      Offset? endOffset,
-      })
-      : title = title,
+  Flushbar({
+    Key? key,
+    String? title,
+    Color? titleColor,
+    double? titleSize,
+    String? message,
+    double? messageSize,
+    Color? messageColor,
+    Widget? titleText,
+    Widget? messageText,
+    Widget? icon,
+    bool shouldIconPulse = true,
+    double? maxWidth,
+    EdgeInsets margin = const EdgeInsets.all(0.0),
+    EdgeInsets padding = const EdgeInsets.all(16),
+    BorderRadius? borderRadius,
+    Color? borderColor,
+    double borderWidth = 1.0,
+    Color backgroundColor = const Color(0xFF303030),
+    Color? leftBarIndicatorColor,
+    List<BoxShadow>? boxShadows,
+    Gradient? backgroundGradient,
+    Widget? mainButton,
+    OnTap? onTap,
+    Duration? duration,
+    bool isDismissible = true,
+    FlushbarDismissDirection dismissDirection =
+        FlushbarDismissDirection.VERTICAL,
+    bool showProgressIndicator = false,
+    AnimationController? progressIndicatorController,
+    Color? progressIndicatorBackgroundColor,
+    Animation<Color>? progressIndicatorValueColor,
+    FlushbarPosition flushbarPosition = FlushbarPosition.BOTTOM,
+    double positionOffset = 0.0,
+    FlushbarStyle flushbarStyle = FlushbarStyle.FLOATING,
+    Curve forwardAnimationCurve = Curves.easeOutCirc,
+    Curve reverseAnimationCurve = Curves.easeOutCirc,
+    Duration animationDuration = const Duration(seconds: 1),
+    FlushbarStatusCallback? onStatusChanged,
+    double barBlur = 0.0,
+    bool blockBackgroundInteraction = false,
+    double? routeBlur,
+    Color? routeColor,
+    Form? userInputForm,
+    Offset? endOffset,
+  })  : title = title,
         titleSize = titleSize,
         titleColor = titleColor,
         message = message,
@@ -290,7 +289,7 @@ class Flushbar<T> extends StatefulWidget {
 
   /// Checks if the flushbar is visible
   bool isShowing() {
-    if(flushbarRoute == null){
+    if (flushbarRoute == null) {
       return false;
     }
     return flushbarRoute!.currentStatus == FlushbarStatus.SHOWING;
@@ -298,21 +297,21 @@ class Flushbar<T> extends StatefulWidget {
 
   /// Checks if the flushbar is dismissed
   bool isDismissed() {
-    if(flushbarRoute == null){
+    if (flushbarRoute == null) {
       return false;
     }
     return flushbarRoute!.currentStatus == FlushbarStatus.DISMISSED;
   }
 
   bool isAppearing() {
-    if(flushbarRoute == null){
+    if (flushbarRoute == null) {
       return false;
     }
     return flushbarRoute!.currentStatus == FlushbarStatus.IS_APPEARING;
   }
 
   bool isHiding() {
-    if(flushbarRoute == null){
+    if (flushbarRoute == null) {
       return false;
     }
     return flushbarRoute!.currentStatus == FlushbarStatus.IS_HIDING;
@@ -338,7 +337,7 @@ class _FlushbarState<K extends Object?> extends State<Flushbar<K>>
   FocusScopeNode? _focusNode;
   late FocusAttachment _focusAttachment;
   late Completer<Size> _boxHeightCompleter;
-  
+
   CurvedAnimation? _progressAnimation;
 
   @override
@@ -428,25 +427,17 @@ class _FlushbarState<K extends Object?> extends State<Flushbar<K>>
     return Align(
       heightFactor: 1.0,
       child: Material(
-        color: widget.flushbarStyle == FlushbarStyle.FLOATING
-            ? Colors.transparent
-            : widget.backgroundColor,
-        child: SafeArea( 
-          minimum: widget.flushbarPosition == FlushbarPosition.BOTTOM
-              ? EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom)
-              : EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
-              // ? EdgeInsets.only(
-              //     bottom: (MediaQuery.of(context).padding.bottom +
-              //         widget.positionOffset))
-              // : EdgeInsets.only(
-              //     top: (MediaQuery.of(context).padding.top) +
-              //         widget.positionOffset),
-          bottom: widget.flushbarPosition == FlushbarPosition.BOTTOM,
-          top: widget.flushbarPosition == FlushbarPosition.TOP,
-          left: false,
-          right: false,
-          child: _getFlushbar(),
+        color: Colors.transparent,
+        child: Column(
+          children: [
+            Container(
+              color: widget.flushbarStyle == FlushbarStyle.FLOATING
+                  ? Colors.transparent
+                  : widget.backgroundColor,
+              height: MediaQuery.of(context).padding.top,
+            ),
+            _getFlushbar(),
+          ],
         ),
       ),
     );
@@ -745,9 +736,11 @@ class _FlushbarState<K extends Object?> extends State<Flushbar<K>>
               width: 8.0,
               height: snapshot.data!.height,
               decoration: BoxDecoration(
-                borderRadius: widget.borderRadius == null ? null : BorderRadius.only(
-                    topLeft: widget.borderRadius!.topLeft,
-                    bottomLeft: widget.borderRadius!.bottomLeft),
+                borderRadius: widget.borderRadius == null
+                    ? null
+                    : BorderRadius.only(
+                        topLeft: widget.borderRadius!.topLeft,
+                        bottomLeft: widget.borderRadius!.bottomLeft),
                 color: widget.leftBarIndicatorColor,
               ),
             );
